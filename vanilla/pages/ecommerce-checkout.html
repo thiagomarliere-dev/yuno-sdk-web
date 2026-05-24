@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ÉLARA Fashion — Secure Checkout">
+  <title>ÉLARA — Checkout</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>👗</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../static/ecommerce-styles.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       HEADER / NAVBAR
+       ====================================================== -->
+  <header class="checkout-header">
+    <div class="header-inner">
+
+      <!-- Brand -->
+      <a href="#" class="brand-logo">ÉLAR<span class="accent-letter">A</span></a>
+
+      <!-- Progress steps -->
+      <nav class="checkout-steps" aria-label="Checkout progress">
+        <div class="step completed">
+          <div class="step-number" aria-label="Completed">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2.5 6L5 8.5L9.5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="step-label">Cart</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step active">
+          <div class="step-number">2</div>
+          <span class="step-label">Checkout</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <span class="step-label">Confirmation</span>
+        </div>
+      </nav>
+
+      <!-- Security indicator -->
+      <div class="header-secure">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M7 1L2 3.5v4c0 2.5 2.2 4.9 5 5.5 2.8-.6 5-3 5-5.5v-4L7 1z"
+                stroke="currentColor" stroke-width="1.4" fill="none"/>
+        </svg>
+        Secure Checkout
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ======================================================
+       MAIN CHECKOUT AREA
+       ====================================================== -->
+  <main class="checkout-main">
+    <div class="checkout-container">
+
+      <!-- ====================================================
+           LEFT — FORM SECTIONS
+           ==================================================== -->
+      <div class="checkout-form-section">
+
+        <!-- — — — Contact Information — — — -->
+        <section class="form-card fade-up" style="animation-delay:0s">
+          <div class="form-card-header">
+            <div>
+              <h2 class="form-card-title">Contact Information</h2>
+              <p class="form-card-subtitle">Order confirmation will be sent here</p>
+            </div>
+            <div class="form-card-badge">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M3 5l1.5 1.5L7 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Verified
+            </div>
+          </div>
+          <div class="form-card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="first-name">First Name</label>
+                <input type="text" id="first-name" class="form-input" value="John" placeholder="First name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="last-name">Last Name</label>
+                <input type="text" id="last-name" class="form-input" value="Doe" placeholder="Last name">
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label" for="email">Email Address</label>
+              <input type="email" id="email" class="form-input" value="john.doe@example.com" placeholder="email@example.com">
+            </div>
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label" for="phone">Phone Number</label>
+              <input type="tel" id="phone" class="form-input" value="+57 313 245 0765" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+        </section>
+
+
+        <!-- — — — Shipping Address — — — -->
+        <section class="form-card fade-up" style="animation-delay:0.1s">
+          <div class="form-card-header">
+            <div>
+              <h2 class="form-card-title">Shipping Address</h2>
+              <p class="form-card-subtitle">Select your country to see available payment methods</p>
+            </div>
+          </div>
+          <div class="form-card-body">
+
+            <!-- Country Selector -->
+            <div class="form-group">
+              <label class="form-label">Country &amp; Region</label>
+              <div class="country-selector" id="country-selector" role="group" aria-label="Select country">
+
+                <button class="country-btn" data-country="BR" type="button" aria-pressed="false">
+                  <span class="country-flag" aria-hidden="true">🇧🇷</span>
+                  <div class="country-info">
+                    <span class="country-name">Brazil</span>
+                    <span class="country-currency">BRL · R$</span>
+                  </div>
+                </button>
+
+                <button class="country-btn active" data-country="CO" type="button" aria-pressed="true">
+                  <span class="country-flag" aria-hidden="true">🇨🇴</span>
+                  <div class="country-info">
+                    <span class="country-name">Colombia</span>
+                    <span class="country-currency">COP · $</span>
+                  </div>
+                </button>
+
+                <button class="country-btn" data-country="MX" type="button" aria-pressed="false">
+                  <span class="country-flag" aria-hidden="true">🇲🇽</span>
+                  <div class="country-info">
+                    <span class="country-name">Mexico</span>
+                    <span class="country-currency">MXN · MX$</span>
+                  </div>
+                </button>
+
+              </div>
+            </div>
+
+            <!-- Address fields -->
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label" for="address">Street Address</label>
+              <input type="text" id="address" class="form-input" value="Calle 34 # 56 - 78" placeholder="Street address">
+            </div>
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label" for="address2">Apartment, Suite (optional)</label>
+              <input type="text" id="address2" class="form-input" value="Apartamento 502, Torre I" placeholder="Apt, suite, unit…">
+            </div>
+            <div class="form-row" style="margin-top:16px">
+              <div class="form-group">
+                <label class="form-label" for="city">City</label>
+                <input type="text" id="city" class="form-input" value="Bogotá" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="zip">Postal Code</label>
+                <input type="text" id="zip" class="form-input" value="111111" placeholder="ZIP / Postal">
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- — — — Payment — — — -->
+        <section class="form-card fade-up" id="payment-card" style="animation-delay:0.2s">
+          <div class="form-card-header">
+            <div>
+              <h2 class="form-card-title">Payment</h2>
+              <p class="form-card-subtitle">Transactions are encrypted and secure</p>
+            </div>
+            <div class="form-card-badge">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M5 1L1.5 2.7v3c0 1.8 1.5 3.5 3.5 4 2-.5 3.5-2.2 3.5-4v-3L5 1z"
+                      stroke="currentColor" stroke-width="1.3"/>
+              </svg>
+              256-bit SSL
+            </div>
+          </div>
+          <div class="form-card-body">
+
+            <!-- Payment info note -->
+            <div class="payment-note">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="6" stroke="#c8a96e" stroke-width="1.4"/>
+                <path d="M7 4.5v3.5M7 10v.5" stroke="#c8a96e" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <span class="payment-note-text" id="payment-note-text">
+                Loading payment methods for your region…
+              </span>
+            </div>
+
+            <!-- Method availability chips -->
+            <div class="method-chips" id="method-chips" role="list" aria-label="Available payment methods">
+            </div>
+
+            <!-- Skeleton loading state -->
+            <div class="skeleton-wrap" id="skeleton-wrap">
+              <div class="skeleton-row">
+                <div class="sk-icon"></div>
+                <div class="sk-text">
+                  <div class="sk-line"></div>
+                  <div class="sk-line short"></div>
+                </div>
+              </div>
+              <div class="skeleton-row" style="animation-delay:0.1s">
+                <div class="sk-icon"></div>
+                <div class="sk-text">
+                  <div class="sk-line"></div>
+                  <div class="sk-line short"></div>
+                </div>
+              </div>
+              <div class="skeleton-row" style="animation-delay:0.2s">
+                <div class="sk-icon"></div>
+                <div class="sk-text">
+                  <div class="sk-line"></div>
+                  <div class="sk-line short"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yuno SDK Mount Points -->
+            <div id="yuno-root"></div>
+            <div id="yuno-form"></div>
+            <div id="yuno-action-form"></div>
+
+            <!-- Pay Button -->
+            <div class="pay-btn-wrap">
+              <button id="pay-button" class="btn-pay" disabled type="button" aria-label="Complete purchase">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <rect x="1.5" y="4.5" width="15" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M1.5 8h15" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Complete Purchase
+              </button>
+
+              <div class="security-trust-row">
+                <div class="trust-badge">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M6 1L1.5 3.3v3.7c0 2.1 1.8 4.1 4.5 4.7 2.7-.6 4.5-2.6 4.5-4.7V3.3L6 1z"
+                          stroke="currentColor" stroke-width="1.2"/>
+                  </svg>
+                  Encrypted
+                </div>
+                <div class="trust-badge">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M3.5 6l2 2 3-3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Powered by Yuno
+                </div>
+                <div class="trust-badge">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <rect x="1" y="3" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M4 3V2.5a2 2 0 014 0V3" stroke="currentColor" stroke-width="1.2"/>
+                  </svg>
+                  Free Returns
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div><!-- /checkout-form-section -->
+
+
+      <!-- ====================================================
+           RIGHT — ORDER SUMMARY (sticky)
+           ==================================================== -->
+      <aside class="order-summary" aria-label="Order summary">
+        <div class="summary-card">
+
+          <div class="summary-header">
+            <h3 class="summary-title">Order Summary</h3>
+            <span class="summary-count">3 items</span>
+          </div>
+
+          <!-- Cart items (rendered by JS) -->
+          <div class="summary-items" id="summary-items" role="list">
+          </div>
+
+          <!-- Promo code -->
+          <div class="promo-section">
+            <div class="promo-row">
+              <input type="text" class="promo-input" id="promo-input" placeholder="Promo code" aria-label="Promo code">
+              <button class="btn-promo" type="button" id="btn-promo">Apply</button>
+            </div>
+          </div>
+
+          <!-- Totals -->
+          <div class="summary-totals">
+            <div class="total-row">
+              <span class="lbl">Subtotal</span>
+              <span class="val" id="total-subtotal">—</span>
+            </div>
+            <div class="total-row free">
+              <span class="lbl">Shipping</span>
+              <span class="val" id="total-shipping">Free</span>
+            </div>
+            <div class="total-row">
+              <span class="lbl">Estimated tax</span>
+              <span class="val" id="total-tax">—</span>
+            </div>
+            <div class="total-row grand">
+              <span class="lbl">Total</span>
+              <span class="val" id="total-grand">—</span>
+            </div>
+          </div>
+
+          <!-- Trust signals -->
+          <div class="summary-footer">
+            <div class="summary-trust-item">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 1L2 3.5v4c0 2.5 2.2 4.9 5 5.5 2.8-.6 5-3 5-5.5v-4L7 1z"
+                      stroke="#1a7f5e" stroke-width="1.3"/>
+              </svg>
+              256-bit SSL encryption
+            </div>
+            <div class="summary-trust-item">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <circle cx="7" cy="7" r="6" stroke="#1a7f5e" stroke-width="1.3"/>
+                <path d="M4.5 7l2 2 3-3.5" stroke="#1a7f5e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Free 30-day returns
+            </div>
+            <div class="summary-trust-item">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1" y="3" width="12" height="8" rx="1.5" stroke="#1a7f5e" stroke-width="1.3"/>
+                <path d="M1 7h12" stroke="#1a7f5e" stroke-width="1.3"/>
+              </svg>
+              PCI DSS compliant payments
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </div><!-- /checkout-container -->
+  </main>
+
+
+  <!-- ======================================================
+       PROCESSING OVERLAY
+       ====================================================== -->
+  <div class="overlay" id="overlay-processing" role="status" aria-live="polite">
+    <div class="overlay-card">
+      <div class="spinner-ring" aria-hidden="true"></div>
+      <h3 class="overlay-title">Processing Payment</h3>
+      <p class="overlay-body">Please keep this window open while we confirm your order…</p>
+    </div>
+  </div>
+
+
+  <!-- ======================================================
+       SUCCESS STATE
+       ====================================================== -->
+  <div class="overlay" id="overlay-success" role="dialog" aria-modal="true" aria-label="Order confirmed">
+    <div class="overlay-card">
+      <div class="icon-circle success" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <path d="M8 18l6 6 14-14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="overlay-title">Order Confirmed!</h2>
+      <p class="overlay-body">
+        Thank you for shopping with ÉLARA. Your items are being prepared
+        for shipment. A confirmation email is on its way.
+      </p>
+      <div class="order-ref" id="order-ref">Order #ÉLARA-00000000</div>
+      <button class="btn-overlay primary" id="btn-continue-shopping" type="button">
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ======================================================
+       ERROR STATE
+       ====================================================== -->
+  <div class="overlay" id="overlay-error" role="dialog" aria-modal="true" aria-label="Payment failed">
+    <div class="overlay-card">
+      <div class="icon-circle error" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <path d="M11 11l14 14M25 11L11 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="overlay-title">Payment Failed</h2>
+      <p class="overlay-body" id="error-message-text">
+        There was an issue processing your payment. Please check your details and try again.
+      </p>
+      <button class="btn-overlay primary" id="btn-retry" type="button">
+        Try Again
+      </button>
+      <button class="btn-overlay secondary" id="btn-change-method" type="button">
+        Change Payment Method
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ======================================================
+       PENDING STATE
+       ====================================================== -->
+  <div class="overlay" id="overlay-pending" role="dialog" aria-modal="true" aria-label="Payment pending">
+    <div class="overlay-card">
+      <div class="icon-circle pending" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="15" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M18 10v8l5 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="overlay-title">Payment Pending</h2>
+      <p class="overlay-body">
+        Your payment is being processed. We'll notify you once it's confirmed.
+        This may take a few minutes.
+      </p>
+      <button class="btn-overlay primary" id="btn-view-status" type="button">
+        View Order Status
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ======================================================
+       TOAST CONTAINER
+       ====================================================== -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+
+  <!-- ======================================================
+       SCRIPTS
+       ====================================================== -->
+  <script type="module" src="../static/ecommerce-checkout.js"></script>
+  <script src="https://sdk-web.y.uno/v1.5/main.js" defer></script>
+
+</body>
+</html>
