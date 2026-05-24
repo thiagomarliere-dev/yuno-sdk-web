@@ -32,6 +32,7 @@ const enrollmentLitePage = path.join(__dirname, 'vanilla/pages/enrollment-lite.h
 const checkoutSecureFieldsPage = path.join(__dirname, 'vanilla/pages/checkout-secure-fields.html')
 const fullFeatures = path.join(__dirname, 'vanilla/pages/full-features.html')
 const paymentMethodsUnfolded = path.join(__dirname, 'vanilla/pages/payment-methods-unfolded.html')
+const ecommerceCheckout = path.join(__dirname, 'vanilla/pages/ecommerce-checkout.html')
 
 const app = express()
 
@@ -86,34 +87,43 @@ app.get('/checkout/payment-methods-unfolded', async (req, res) => {
   res.sendFile(paymentMethodsUnfolded)
 })
 
+app.get('/ecommerce', (req, res) => {
+  res.sendFile(ecommerceCheckout)
+})
+
 app.post('/checkout/sessions', async (req, res) => {
   const country = req.query.country || 'CO'
   const { currency } = getCountryData(country)
 
-  const response = await fetch(
-    `${API_URL}/v1/checkout/sessions`,
-    {
-      method: 'POST',
-      headers: {
-        'public-api-key': PUBLIC_API_KEY,
-        'private-secret-key': PRIVATE_SECRET_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        account_id: ACCOUNT_CODE,
-        merchant_order_id: '1655401222',
-        payment_description: 'Test MP 1654536326',
-        country,
-        customer_id: CUSTOMER_ID,
-        amount: {
-          currency,
-          value: 2000,
+  try {
+    const rawResp = await fetch(
+      `${API_URL}/v1/checkout/sessions`,
+      {
+        method: 'POST',
+        headers: {
+          'public-api-key': PUBLIC_API_KEY,
+          'private-secret-key': PRIVATE_SECRET_KEY,
+          'Content-Type': 'application/json',
         },
-      }),
+        body: JSON.stringify({
+          account_id: ACCOUNT_CODE,
+          merchant_order_id: v4(),
+          payment_description: 'ÉLARA Fashion Order',
+          country,
+          ...(CUSTOMER_ID ? { customer_id: CUSTOMER_ID } : {}),
+          amount: { currency, value: 2000 },
+        }),
+      }
+    )
+    const text = await rawResp.text()
+    try {
+      res.json(JSON.parse(text))
+    } catch {
+      res.status(502).json({ error: 'upstream_error', message: text })
     }
-  ).then((resp) => resp.json())
-
-  res.send(response)
+  } catch (err) {
+    res.status(500).json({ error: 'server_error', message: err.message })
+  }
 })
 
 app.post('/checkout/seamless/sessions', async (req, res) => {
@@ -521,15 +531,25 @@ app.listen(SERVER_PORT, async () => {
   console.log(`server started at port: ${SERVER_PORT}`)
   app._router.stack.forEach((middleware) => {
     if (middleware.route && middleware.route.methods.get) {
-      console.log(`Ruta disponible: http://localhost:8080${middleware.route.path}`);
+      console.log(`Ruta disponible: http://localhost:${SERVER_PORT}${middleware.route.path}`);
     }
   });
 
   API_URL = generateBaseUrlApi()
 
-  CUSTOMER_ID = await createCustomer().then(({ id }) => id)
+  try {
+    const customer = await createCustomer()
+    CUSTOMER_ID = customer.id
+    if (CUSTOMER_ID) {
+      console.log(`Customer created: ${CUSTOMER_ID}`)
+    } else {
+      console.warn('Customer creation returned no ID — proceeding without customer_id')
+    }
+  } catch (err) {
+    console.warn('Could not create customer (API may require host allowlisting):', err.message)
+  }
 
-  await open(`http://localhost:${SERVER_PORT}`);
+  try { await open(`http://localhost:${SERVER_PORT}/ecommerce`) } catch (_) {}
 })
 
 const ApiKeyPrefixToEnvironmentSuffix = {

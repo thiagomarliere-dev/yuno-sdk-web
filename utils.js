@@ -29,6 +29,13 @@ exports.getCountryData = function getCountryData(country) {
       currency: "CLP",
       amount: Math.floor(Math.random() * (1000 + 1) + 10),
     };
+  } else if (country == "MX") {
+    countryData = {
+      documentType: "CURP",
+      documentNumber: "ABCD123456HMCRRN01",
+      currency: "MXN",
+      amount: Math.floor(Math.random() * (1000 + 1) + 10),
+    };
   } else {
     countryData = {
       documentType: "PASS",
