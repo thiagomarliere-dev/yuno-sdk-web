@@ -570,8 +570,8 @@ function generateBaseUrlApi() {
   return baseURL
 }
 
-function createCustomer() {
-  const response = fetch(
+async function createCustomer() {
+  const resp = await fetch(
     `${API_URL}/v1/customers`,
     {
       method: 'POST',
@@ -588,7 +588,10 @@ function createCustomer() {
         email: "john.doe@y.uno"
       })
     }
-  ).then((resp) => resp.json())
-
-  return response
+  )
+  const text = await resp.text()
+  let data
+  try { data = JSON.parse(text) } catch { throw new Error(text) }
+  if (!resp.ok) throw new Error(data.message || text)
+  return data
 }
